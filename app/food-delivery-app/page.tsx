@@ -1,14 +1,14 @@
-"use client"
+'use client'
 
 import Image from 'next/image'
-import { useState } from 'react'
-import { Search, ShoppingBag, Menu } from 'lucide-react'
+import { Search, ShoppingBag, Menu, Bookmark as BookmarkIcon, Clock as ClockIcon, DollarSign as DollarSignIcon } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
+import { useState } from 'react'
 
-export default function FoodDeliveryApp() {
-  const [activeCategory, setActiveCategory] = useState('Pizza')
+export default function Component() {
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   const categories = [
     { id: 'pizza', label: 'Pizza', icon: '🍕' },
@@ -18,6 +18,7 @@ export default function FoodDeliveryApp() {
     { id: 'vegan', label: 'Vegan', icon: '🥬' },
     { id: 'desserts', label: 'Desserts', icon: '🧁' },
   ]
+ 
 
   const restaurants = [
     {
@@ -49,6 +50,22 @@ export default function FoodDeliveryApp() {
     }
   ]
 
+  const handleCategoryClick = (categoryId: string) => {
+    setSelectedCategories(prev => 
+      prev.includes(categoryId)
+        ? prev.filter(id => id !== categoryId)
+        : [...prev, categoryId]
+    );
+  };
+
+  const filteredRestaurants = selectedCategories.length > 0
+    ? restaurants.filter(restaurant => 
+        restaurant.categories.some(cat => 
+          selectedCategories.includes(cat.toLowerCase())
+        )
+      )
+    : restaurants;
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -56,9 +73,16 @@ export default function FoodDeliveryApp() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-6">
-              <h1 className="text-xl font-semibold">
-                Food <span className="text-blue-600">delivery</span>
-              </h1>
+              <div className="flex items-center">
+                <Image 
+                  src="/main.jpg"
+                  alt="Food Delivery Logo"
+                  width={1200}
+                  height={32}
+                  className="h-8 w-auto object-left object-contain"
+                  priority
+                />
+              </div>
               <div className="relative hidden md:block">
                 <Input
                   className="w-[300px] bg-gray-50"
@@ -99,58 +123,73 @@ export default function FoodDeliveryApp() {
 
       <main className="container mx-auto px-4 py-8">
         {/* Promotional Banners */}
-        <div className="grid gap-6 md:grid-cols-2 mb-12">
-          <div className="relative overflow-hidden rounded-2xl bg-[#F3F4FF] p-6 flex items-center">
-            <div>
-              <h3 className="text-2xl font-bold absolute right-40 -top-1  mb-2">All deserts</h3>
-              <p className="text-5xl font-bold text-blue-600 absolute right-20  ">20% OFF</p>
-              <p className="text-muted-foreground absolute right-40 -bottom-0">Deserty</p>
+        <div className="mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* First Banner */}
+            <div className="cursor-pointer transition-transform duration-300 hover:scale-[1.02] hover:shadow-xl rounded-2xl relative overflow-hidden">
+              <Image
+                src="/desserts.jpg"
+                alt="All Deserts Offer"
+                width={600}
+                height={200}
+                className="w-full h-[200px] object-cover rounded-2xl"
+                priority
+              />
+             
             </div>
-            <Image
-              src="/chocolate.jpg?height=200&width=300"
-              alt="Dessert"
-              width={300}
-              height={200}
-              className="absolute -left-1 -bottom-2  w-50 h-48 object-cover "
-            />
-          </div>
-          <div className="relative overflow-hidden rounded-2xl bg-[#FFF3ED] p-6 flex items-center">
-            <div>
-              <h3 className="text-2xl font-bold absolute  mb-2">Big Burgers</h3>
-              <p className="text-5xl font-bold text-orange-500 mb-4">50% OFF</p>
-              <p className="text-muted-foreground">Foodies</p>
+
+            {/* Second Banner */}
+            <div className="cursor-pointer transition-transform duration-300 hover:scale-[1.02] hover:shadow-xl rounded-2xl relative overflow-hidden">
+              <Image
+                src="/deals.jpg"
+                alt="Big Burgers Offer"
+                width={600}
+                height={200}
+                className="w-full h-[200px] object-cover rounded-2xl"
+                priority
+              />
+              
             </div>
-            <Image
-              src="/burgers-1.jpg?height=200&width=300"
-              alt="Burger"
-              width={300}
-              height={200}
-              className="absolute -left-1 -bottom-2 w-50 h-48 object-cover"
-            />
           </div>
         </div>
 
         {/* Categories */}
-        <div className="flex gap-4 overflow-x-auto pb-4 mb-8">
-          {categories.map((category) => (
-            <Button
-              key={category.id}
-              variant={activeCategory === category.label ? "default" : "outline"}
-              className="flex items-center gap-8 whitespace-nowrap"
-              onClick={() => setActiveCategory(category.label)}
-            >
-              <span className="text-xl">{category.icon}</span>
-              {category.label}
-            </Button>
-          ))}
+        <div className="mb-12">
+          <div className="mx-auto">
+            <div className="flex items-start justify-between flex-wrap">
+              {categories.map((category) => (
+                <div
+                  key={category.id}
+                  onClick={() => handleCategoryClick(category.id)}
+                  className={`
+                    cursor-pointer flex flex-col items-center justify-center
+                    w-[160px] h-[80px] px-4 rounded-2xl
+                    transition-all duration-200
+                    ${selectedCategories.includes(category.id)
+                      ? 'bg-[#F3F4FF] border-[#4E60FF] border-2 text-[#4E60FF]' 
+                      : 'bg-blue-50/50 hover:bg-blue-50 border border-gray-100'
+                    }
+                  `}
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl">{category.icon}</span>
+                    <span className="text-sm font-medium">{category.label}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Nearby Restaurants */}
         <h2 className="text-2xl font-bold mb-6">Nearby restaurants</h2>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {restaurants.map((restaurant) => (
-            <div key={restaurant.id} className="group relative">
-              <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+          {filteredRestaurants.map((restaurant) => (
+            <div 
+              key={restaurant.id} 
+              className="group bg-white rounded-2xl overflow-hidden border border-gray-100 cursor-pointer transition-transform duration-200 hover:scale-105 hover:shadow-lg"
+            >
+              <div className="relative aspect-[16/10] overflow-hidden">
                 <Image
                   src={restaurant.image}
                   alt={restaurant.name}

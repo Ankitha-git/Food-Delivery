@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 // File: C:\Users\alamp\Desktop\Code\home-page\Food-Delivery\app\page.tsx
+=======
+// File: C:\Users\alamp\Desktop\Code\home-page\final\Food-Delivery\app\page.tsx
+>>>>>>> dev
 import * as entry from '../../../app/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
