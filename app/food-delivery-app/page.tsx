@@ -1,12 +1,23 @@
-"use client"
+'use client'
 
 import Image from 'next/image'
-import { Search, ShoppingBag, Menu, BookmarkIcon, ClockIcon, DollarSignIcon } from 'lucide-react'
+import { Search, ShoppingBag, Menu, Bookmark as BookmarkIcon, Clock as ClockIcon, DollarSign as DollarSignIcon } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
+import { useState } from 'react'
 
-export default function FoodDeliveryApp() {
+export default function Component() {
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+
+  const categories = [
+    { id: 'pizza', label: 'Pizza', icon: '🍕' },
+    { id: 'burger', label: 'Burger', icon: '🍔' },
+    { id: 'bbq', label: 'BBQ', icon: '🍖' },
+    { id: 'sushi', label: 'Sushi', icon: '🍣' },
+    { id: 'vegan', label: 'Vegan', icon: '🥬' },
+    { id: 'desserts', label: 'Desserts', icon: '🧁' },
+  ]
  
 
   const restaurants = [
@@ -38,6 +49,22 @@ export default function FoodDeliveryApp() {
       featured: false
     }
   ]
+
+  const handleCategoryClick = (categoryId: string) => {
+    setSelectedCategories(prev => 
+      prev.includes(categoryId)
+        ? prev.filter(id => id !== categoryId)
+        : [...prev, categoryId]
+    );
+  };
+
+  const filteredRestaurants = selectedCategories.length > 0
+    ? restaurants.filter(restaurant => 
+        restaurant.categories.some(cat => 
+          selectedCategories.includes(cat.toLowerCase())
+        )
+      )
+    : restaurants;
 
   return (
     <div className="min-h-screen bg-background">
@@ -108,21 +135,41 @@ export default function FoodDeliveryApp() {
         </div>
 
         {/* Categories */}
-        <div className="mb-8">
-          <Image
-            src="/categories.jpg"
-            alt="Food Categories"
-            width={1200}
-            height={300}
-            className="w-full h-auto rounded-2xl"
-          />
+        <div className="mb-12">
+          <div className="mx-auto">
+            <div className="flex items-start justify-between flex-wrap">
+              {categories.map((category) => (
+                <div
+                  key={category.id}
+                  onClick={() => handleCategoryClick(category.id)}
+                  className={`
+                    cursor-pointer flex flex-col items-center justify-center
+                    w-[160px] h-[80px] px-4 rounded-2xl
+                    transition-all duration-200
+                    ${selectedCategories.includes(category.id)
+                      ? 'bg-[#F3F4FF] border-[#4E60FF] border-2 text-[#4E60FF]' 
+                      : 'bg-blue-50/50 hover:bg-blue-50 border border-gray-100'
+                    }
+                  `}
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl">{category.icon}</span>
+                    <span className="text-sm font-medium">{category.label}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Nearby Restaurants */}
         <h2 className="text-2xl font-bold mb-6">Nearby restaurants</h2>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {restaurants.map((restaurant) => (
-            <div key={restaurant.id} className="group bg-white rounded-2xl overflow-hidden border border-gray-100">
+          {filteredRestaurants.map((restaurant) => (
+            <div 
+              key={restaurant.id} 
+              className="group bg-white rounded-2xl overflow-hidden border border-gray-100 cursor-pointer transition-transform duration-200 hover:scale-105 hover:shadow-lg"
+            >
               <div className="relative aspect-[16/10] overflow-hidden">
                 <Image
                   src={restaurant.image}
