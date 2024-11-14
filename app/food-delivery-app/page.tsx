@@ -1,23 +1,13 @@
 "use client"
 
 import Image from 'next/image'
-import { useState } from 'react'
-import { Search, ShoppingBag, Menu } from 'lucide-react'
+import { Search, ShoppingBag, Menu, BookmarkIcon, ClockIcon, DollarSignIcon } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 
 export default function FoodDeliveryApp() {
-  const [activeCategory, setActiveCategory] = useState('Pizza')
-
-  const categories = [
-    { id: 'pizza', label: 'Pizza', icon: '🍕' },
-    { id: 'burger', label: 'Burger', icon: '🍔' },
-    { id: 'bbq', label: 'BBQ', icon: '🍖' },
-    { id: 'sushi', label: 'Sushi', icon: '🍣' },
-    { id: 'vegan', label: 'Vegan', icon: '🥬' },
-    { id: 'desserts', label: 'Desserts', icon: '🧁' },
-  ]
+ 
 
   const restaurants = [
     {
@@ -56,9 +46,16 @@ export default function FoodDeliveryApp() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-6">
-              <h1 className="text-xl font-semibold">
-                Food <span className="text-blue-600">delivery</span>
-              </h1>
+              <div className="flex items-center">
+                <Image 
+                  src="/main.jpg"
+                  alt="Food Delivery Logo"
+                  width={120}
+                  height={32}
+                  className="h-8 object-contain"
+                  priority
+                />
+              </div>
               <div className="relative hidden md:block">
                 <Input
                   className="w-[300px] bg-gray-50"
@@ -97,89 +94,81 @@ export default function FoodDeliveryApp() {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-6 py-8">
         {/* Promotional Banners */}
-        <div className="grid gap-6 md:grid-cols-2 mb-12">
-          <div className="relative overflow-hidden rounded-2xl bg-[#F3F4FF] p-6 flex items-center">
-            <div>
-              <h3 className="text-2xl font-bold absolute right-40 -top-1  mb-2">All deserts</h3>
-              <p className="text-5xl font-bold text-blue-600 absolute right-20  ">20% OFF</p>
-              <p className="text-muted-foreground absolute right-40 -bottom-0">Deserty</p>
-            </div>
-            <Image
-              src="/chocolate.jpg?height=200&width=300"
-              alt="Dessert"
-              width={300}
-              height={200}
-              className="absolute -left-1 -bottom-2  w-50 h-48 object-cover "
-            />
-          </div>
-          <div className="relative overflow-hidden rounded-2xl bg-[#FFF3ED] p-6 flex items-center">
-            <div>
-              <h3 className="text-2xl font-bold absolute  mb-2">Big Burgers</h3>
-              <p className="text-5xl font-bold text-orange-500 mb-4">50% OFF</p>
-              <p className="text-muted-foreground">Foodies</p>
-            </div>
-            <Image
-              src="/burgers-1.jpg?height=200&width=300"
-              alt="Burger"
-              width={300}
-              height={200}
-              className="absolute -left-1 -bottom-2 w-50 h-48 object-cover"
-            />
-          </div>
+        <div className="mb-12">
+          <Image
+            src="/offers.jpg"
+            alt="Promotional Offers"
+            width={1200}
+            height={300}
+            className="w-full h-auto rounded-2xl"
+            priority
+          />
         </div>
 
         {/* Categories */}
-        <div className="flex gap-4 overflow-x-auto pb-4 mb-8">
-          {categories.map((category) => (
-            <Button
-              key={category.id}
-              variant={activeCategory === category.label ? "default" : "outline"}
-              className="flex items-center gap-8 whitespace-nowrap"
-              onClick={() => setActiveCategory(category.label)}
-            >
-              <span className="text-xl">{category.icon}</span>
-              {category.label}
-            </Button>
-          ))}
+        <div className="mb-8">
+          <Image
+            src="/categories.jpg"
+            alt="Food Categories"
+            width={1200}
+            height={300}
+            className="w-full h-auto rounded-2xl"
+          />
         </div>
 
         {/* Nearby Restaurants */}
         <h2 className="text-2xl font-bold mb-6">Nearby restaurants</h2>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {restaurants.map((restaurant) => (
-            <div key={restaurant.id} className="group relative">
-              <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+            <div key={restaurant.id} className="group bg-white rounded-2xl overflow-hidden border border-gray-100">
+              <div className="relative aspect-[16/10] overflow-hidden">
                 <Image
                   src={restaurant.image}
                   alt={restaurant.name}
                   fill
-                  className="object-cover transition-transform group-hover:scale-105"
+                  className="object-cover"
                 />
                 {restaurant.featured && (
-                  <Badge className="absolute left-4 top-4 bg-blue-600">
-                    FEATURED
-                  </Badge>
+                  <div className="absolute left-4 top-4">
+                    <Badge className="bg-blue-600 text-white px-3 py-1">
+                      FEATURED
+                    </Badge>
+                  </div>
                 )}
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="absolute right-4 top-4 bg-white/50 backdrop-blur-sm hover:bg-white/75"
+                <button
+                  className="absolute right-4 top-4 w-8 h-8 rounded-full bg-white flex items-center justify-center hover:bg-gray-100"
                 >
-                  <ShoppingBag className="h-5 w-5" />
-                </Button>
+                  <BookmarkIcon className="h-4 w-4 text-gray-600" />
+                </button>
               </div>
-              <div className="p-4">
-                <h3 className="font-semibold">{restaurant.name}</h3>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <span>⏰ {restaurant.time}</span>
-                  <span>•</span>
-                  <span>{restaurant.minSum}</span>
+              <div className="p-5">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="font-semibold text-lg">{restaurant.name}</h3>
+                  {restaurant.id === 2 && (
+                    <button className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center">
+                      <ShoppingBag className="h-4 w-4 text-blue-600" />
+                    </button>
+                  )}
                 </div>
-                <div className="mt-2 flex gap-2">
+                <div className="flex items-center gap-3 text-sm text-gray-500 mb-3">
+                  <div className="flex items-center gap-1">
+                    <ClockIcon className="h-4 w-4" />
+                    <span>{restaurant.time}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <DollarSignIcon className="h-4 w-4" />
+                    <span>{restaurant.minSum}</span>
+                  </div>
+                </div>
+                <div className="flex gap-2">
                   {restaurant.categories.map((category) => (
-                    <Badge key={category} variant="secondary">
+                    <Badge 
+                      key={category} 
+                      variant="secondary" 
+                      className="bg-gray-100 text-gray-600 hover:bg-gray-200"
+                    >
                       {category}
                     </Badge>
                   ))}

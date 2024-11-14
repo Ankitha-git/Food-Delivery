@@ -36,12 +36,19 @@ function FoodDeliveryApp() {
       {/* Login Section */}
       <div className="w-full lg:w-1/2 min-h-screen bg-white flex items-center justify-center">
         <div className="w-full max-w-md p-8 relative">
-          <h1 className="text-2xl absolute top-0 left-0 p-8">
-            Food <span className="text-blue-600">delivery</span>
-          </h1>
+        <div className="absolute left-8 top-1 bottom-0">
+            <Image 
+              src="/main.jpg"
+              alt="Food delivery logo"
+              width={80}
+              height={40}
+              priority
+              className="object-contain"
+            />
+          </div>
 
-          <h2 className="text-4xl font-bold mb-4 text-center mt-12">Login</h2>
-          <p className="text-muted-foreground mb-8 text-center">
+          <h2 className="text-4xl font-bold mb-4 mt-12">Login</h2>
+          <p className="text-muted-foreground mb-8">
             Sign in with your data that you entered during your registration.
           </p>
 
@@ -130,7 +137,7 @@ function FoodDeliveryApp() {
         {/* Rating Section Image - Left */}
         <div className="absolute top-8 left-8">
           <Image 
-            src="/rating-section.jpg"
+            src="/rating1.jpg"
             alt="Rating Section"
             width={300}
             height={400}
@@ -138,64 +145,33 @@ function FoodDeliveryApp() {
           />
         </div>
 
-        {/* Roll Set Image - Right */}
-        <div className="absolute top-8 right-8">
-          <div className="bg-white p-4 rounded-lg shadow-lg w-[280px]">
-            <div className="flex gap-4">
-              <Image 
-                src="/roll-set.jpg"
-                alt="Roll Set"
-                width={100}
-                height={300}
-                className="rounded-lg object-cover"
-              />
-              <div className="flex-1">
-                <h3 className="font-semibold text-gray-800">
-                  Roll set
-                </h3>
-                <p className="text-sm text-gray-600 mb-2">
-                  Lorem ipsum dolor sit amet, magna scaevola his ei.
-                </p>
-                <div className="flex justify-between items-center">
-                  <span className="font-bold">$ 22.56</span>
-                 
-                </div>
-              </div>
-            </div>
+   {/* Roll Set - Right */}
+   <div className="absolute top-14 left-80 px-0 z-20">
+          <div className=" p-4 rounded-lg w-[540px] h-[420px]">
+            <Image 
+              src="/roll.jpg"
+              alt="Roll Set"
+              width={300}
+              height={400}
+              className="w-full lg:w-1/2  flex flex-col relativeh-[100px] object-cover rounded-xl"
+            />
+          
           </div>
         </div>
-
-        {/* Nigiri Set Image - Center Right */}
-        <div className="absolute top-1/2 right-8 -translate-y-1/2">
-          <div className="bg-white p-4 rounded-lg shadow-lg w-[280px]">
-            <div className="flex gap-4">
-              <Image 
-                src="/nigiri.jpg"
-                alt="Nigiri Set"
-                width={100}
-                height={100}
-                className="rounded-lg object-cover"
-              />
-              <div className="flex-1">
-                <h3 className="font-semibold text-gray-800">Nigiri set</h3>
-                <p className="text-sm text-gray-600">
-                  Ea his sensibus eleifend, mollis iudicabit omittantur id mel.
-                </p>
-                <div className="flex items-center justify-between mt-2">
-                  <span className="font-bold">$ 16.80</span>
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-2">
-                      <span>1</span>
-                      <span className="text-gray-400">+</span>
-                    </div>
-                    <button className="text-blue-600 text-sm">+</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+         {/* Nigiri Set - Bottom Right */}
+         <div className="absolute bottom-60 right-20 z-20">
+          <div className="p-4 rounded-lg w-[600px] h-[120px]">
+            <Image 
+              src="/ninja-set.jpg"
+              alt="Nigiri Set"
+              width={600}  // Increased from 100
+              height={400} // Increased from 180
+              quality={100} // Added for better image quality
+              priority // Added to load image with priority
+              className="w-full h-[100px] object-cover rounded-xl shadow-lg" // Removed unnecessary classes and added shadow
+            />           
           </div>
         </div>
-
         <div className="text-center text-white py-8 px-4 mt-auto">
           <h2 className="text-3xl font-bold mb-4">Leave reviews for all meals</h2>
           <p className="max-w-md mx-auto text-white/80 mb-8">
