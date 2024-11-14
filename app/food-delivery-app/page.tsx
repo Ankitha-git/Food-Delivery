@@ -77,9 +77,9 @@ export default function Component() {
                 <Image 
                   src="/main.jpg"
                   alt="Food Delivery Logo"
-                  width={120}
+                  width={1200}
                   height={32}
-                  className="h-8 object-contain"
+                  className="h-8 w-auto object-left object-contain"
                   priority
                 />
               </div>
@@ -124,14 +124,33 @@ export default function Component() {
       <main className="container mx-auto px-6 py-8">
         {/* Promotional Banners */}
         <div className="mb-12">
-          <Image
-            src="/offers.jpg"
-            alt="Promotional Offers"
-            width={1200}
-            height={300}
-            className="w-full h-auto rounded-2xl"
-            priority
-          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* First Banner */}
+            <div className="cursor-pointer transition-transform duration-300 hover:scale-[1.02] hover:shadow-xl rounded-2xl relative overflow-hidden">
+              <Image
+                src="/desserts.jpg"
+                alt="All Deserts Offer"
+                width={600}
+                height={200}
+                className="w-full h-[200px] object-cover rounded-2xl"
+                priority
+              />
+             
+            </div>
+
+            {/* Second Banner */}
+            <div className="cursor-pointer transition-transform duration-300 hover:scale-[1.02] hover:shadow-xl rounded-2xl relative overflow-hidden">
+              <Image
+                src="/deals.jpg"
+                alt="Big Burgers Offer"
+                width={600}
+                height={200}
+                className="w-full h-[200px] object-cover rounded-2xl"
+                priority
+              />
+              
+            </div>
+          </div>
         </div>
 
         {/* Categories */}

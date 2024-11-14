@@ -1,4 +1,4 @@
 {
-  "/page": "app/page.js",
-  "/food-delivery-app/page": "app/food-delivery-app/page.js"
+  "/food-delivery-app/page": "app/food-delivery-app/page.js",
+  "/page": "app/page.js"
 }
